@@ -1,0 +1,44 @@
+{
+    "manifest_version": 3,
+    "name": "Medium to Freedium",
+    "version": "REPLACED-BY-VITE",
+    "description": "Tự động chuyển bài viết Medium có trả phí sang Freedium để đọc miễn phí",
+    "icons": {
+        "34": "assets/icons/icon-34.png",
+        "128": "assets/icons/icon-128.png"
+    },
+    "action": {
+        "default_title": "Medium to Freedium - Click để mở trong Freedium",
+        "default_icon": "assets/icons/icon-34.png"
+    },
+    "content_scripts": [
+        {
+            "js": ["src/content/index.ts"],
+            "matches": ["*://*.medium.com/*", "*://medium.com/*"],
+            "run_at": "document_idle"
+        }
+    ],
+    "background": {
+        "service_worker": "src/background/index.ts"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/icons/*.png"],
+            "matches": ["*://*.medium.com/*", "*://medium.com/*"],
+            "extension_ids": []
+        }
+    ],
+    "permissions": [
+        "storage",
+        "tabs",
+        "activeTab",
+        "contextMenus",
+        "scripting",
+        "notifications"
+    ],
+    "host_permissions": [
+        "*://*.medium.com/*",
+        "*://medium.com/*",
+        "*://freedium.cfd/*"
+    ]
+}
