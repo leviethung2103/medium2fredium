@@ -1,80 +1,164 @@
 <img src="assets/icons/icon-128.png" width="64"/>
 
-# Chrome Extension (MV3) Boilerplate with React 19 and Vite 7
+# Medium to Freedium Converter
 
-This repository contains a boilerplate for building Chrome Extensions with React 19, TypeScript, and Vite 7.
-This boilerplate is inspired by and adapted
-from [chrome-extension-boilerplate-react](https://github.com/lxieyang/chrome-extension-boilerplate-react).
+Tiện ích mở rộng trình duyệt Chrome/Edge giúp bạn đọc miễn phí các bài viết Medium có trả phí thông qua Freedium.
 
-## Features
+## Tính năng
 
-This is a basic Chrome Extensions boilerplate to help you write modular and modern Javascript code and load CSS easily.
-This boilerplate is using:
+- **Click icon để chuyển đổi**: Click icon tiện ích khi đang trên trang Medium để tự động mở bài viết trên Freedium trong tab mới
+- **Menu chuột phải**: Click chuột phải vào bất kỳ link Medium nào để mở trên Freedium
+- **Nhẹ và nhanh**: Không tốn tài nguyên, không chạy ngầm
+- **Bảo mật riêng tư**: Không theo dõi, không thu thập dữ liệu, xử lý hoàn toàn cục bộ
+- **Hỗ trợ nhiều domain**: Hoạt động với medium.com và các publication phổ biến
 
-- [Chrome Extension Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/)
-- [React 19](https://reactjs.org)
-- [MUI](https://mui.com/)
-- [CRXJS Vite Plugin](https://www.npmjs.com/package/@crxjs/vite-plugin/v/2.0.0-beta.23)
-- ESLint:
-    - [eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react)
-    - [eslint-config-prettier](https://www.npmjs.com/package/eslint-config-prettier)
-    - [eslint-plugin-simple-import-sort](https://www.npmjs.com/package/eslint-plugin-simple-import-sort)
-    - [typescript-eslint](https://www.npmjs.com/package/typescript-eslint)
-- [Prettier](https://prettier.io/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [TanStack Router](https://tanstack.com/router)
+## Các domain được hỗ trợ
 
-Please open up an issue to nudge me to keep the npm packages up-to-date.
+Tiện ích hoạt động trên tất cả các domain sau:
+- medium.com (và tất cả subdomain)
+- hackernoon.com
+- towardsdatascience.com
+- betterprogramming.pub
+- bettermarketing.pub
+- betterhumans.pub
+- uxdesign.cc
+- levelup.gitconnected.com
+- codeburst.io
+- infosecwriteups.com
+- plainenglish.io
+- Và nhiều domain khác...
 
-## Installing and Running
+## Cài đặt
 
-### Procedures:
+### Từ mã nguồn
 
-1. Check if your [Node.js](https://nodejs.org/) version is >= **18**.
-2. Clone this repository.
-3. Change the package's `name`, `description`, and `repository` fields in `package.json`.
-4. Change the name of your extension in `manifest.json`.
-5. Run `yarn install` to install the dependencies.
-6. Run `yarn build`
-7. Load your extension on Chrome following:
-    1. Access `chrome://extensions/`
-    2. Turn the `Developer mode` switch on (top right corner)
-    3. Click on `Load unpacked`
-    4. Select the `dist` folder.
-8. Happy hacking.
+1. **Kiểm tra phiên bản Node.js** >= 18
+   ```bash
+   node --version
+   ```
 
-## Structure
+2. **Clone repository**
+   ```bash
+   git clone <repository-url>
+   cd freedium_converter
+   ```
 
-All your extension's code must be placed in the `src` folder.
+3. **Cài đặt dependencies**
+   ```bash
+   npm install
+   ```
 
-The boilerplate is already prepared to have a popup, a background script, and a content script.
-This example Chrome extension implements logic which lets the user scrape the page title.
-It was done so to demonstrate some of the [chrome API](https://developer.chrome.com/docs/extensions/reference/api)
-functionality.
+4. **Build extension**
+   ```bash
+   npm run build
+   ```
 
-## TypeScript
+5. **Load extension vào Chrome/Edge**
+   1. Mở `chrome://extensions/` (hoặc `edge://extensions/`)
+   2. Bật "Developer mode" (góc trên bên phải)
+   3. Click "Load unpacked"
+   4. Chọn thư mục `dist` trong project
 
-This boilerplate supports TypeScript! Everything that can be written in TypeScript is written in TypeScript.
+## Cách sử dụng
 
-## Change Watchers
+### 1. Click icon tiện ích
+- Truy cập bất kỳ bài viết Medium nào
+- Click vào icon "Medium to Freedium" trên thanh công cụ
+- Bài viết sẽ tự động mở trên Freedium trong tab mới
 
-This boilerplate has a watch script (`yarn watch`) which will update the extension's code every time you save a file.
+### 2. Menu chuột phải
+- Click chuột phải vào bất kỳ link Medium nào trên bất kỳ trang web nào
+- Chọn "Đọc miễn phí trên Freedium"
+- Link sẽ mở trên Freedium trong tab mới
 
-## Packing
+### 3. Mở nhiều link cùng lúc
+- Click chuột phải trên trang web có nhiều link Medium
+- Chọn "Mở tất cả link Medium trong tabs mới"
+- Tất cả link Medium trên trang sẽ được mở trên Freedium
 
-After the development of your extension run the command
+## Development
+
+### Watch mode
+Để phát triển với hot reload:
+```bash
+npm run watch
+```
+
+### Build production
+```bash
+npm run build
+```
+
+### Lint code
+```bash
+npm run lint
+```
+
+### Format code
+```bash
+npm run format
+```
+
+### Type checking
+```bash
+npm run check-types
+```
+
+## Cấu trúc dự án
 
 ```
-$ yarn build
+freedium_converter/
+├── src/
+│   ├── background/         # Service worker (background script)
+│   │   └── index.ts        # Xử lý logic chính, context menu, icon click
+│   ├── content/            # Content scripts
+│   │   └── index.ts        # Script chạy trên các trang Medium
+│   └── common/             # Shared utilities
+├── assets/
+│   └── icons/              # Extension icons
+├── manifest.json           # Extension manifest
+├── vite.config.ts          # Vite configuration
+└── dist/                   # Build output (generated)
 ```
 
-Now, the content of `dist` folder will be the extension ready to be submitted to the Chrome Web Store. Just take a look
-at the [official guide](https://developer.chrome.com/webstore/publish) to more infos about publishing.
+## Công nghệ sử dụng
 
-## Resources:
+- **Manifest V3**: Chrome Extension API mới nhất
+- **TypeScript**: Type-safe development
+- **Vite**: Fast build tool
+- **CRXJS**: Vite plugin cho Chrome extensions
+- **React**: UI library (minimal usage)
+- **ESLint + Prettier**: Code quality
 
-- [Chrome Extension documentation](https://developer.chrome.com/docs/extensions/get-started)
+## Quyền hạn
+
+Tiện ích yêu cầu các quyền sau:
+- `storage`: Lưu cài đặt người dùng
+- `tabs`: Mở tab mới với link Freedium
+- `activeTab`: Đọc URL của tab đang hoạt động
+- `contextMenus`: Tạo menu chuột phải
+- `scripting`: Inject scripts vào trang Medium
+- `notifications`: Hiển thị thông báo khi click icon trên trang không phải Medium
+
+## Bảo mật & Riêng tư
+
+- Không thu thập dữ liệu người dùng
+- Không gửi thông tin đến server bên ngoài
+- Xử lý hoàn toàn cục bộ trên máy
+- Mã nguồn mở, có thể kiểm tra
+
+## Giấy phép
+
+MIT License
+
+## Đóng góp
+
+Contributions, issues và feature requests luôn được hoan nghênh!
+
+## Credits
+
+Built with [Chrome Extension Boilerplate](https://github.com/Gunock/chrome-extension-boilerplate-react-vite)
 
 ---
 
-Tomasz Kiljańczyk | [Website](https://github.com/Gunock)
+Made with ❤️ for the Vietnamese developer community
